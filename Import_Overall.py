@@ -13,7 +13,7 @@ qtrade = Questrade(token_yaml='/home/ec2-user/token.yaml')
 qtrade.refresh_access_token(from_yaml=True)
 account_ids = qtrade.get_account_id()
 positions = []
-#---DONE
+#---/connect to questrade
 
 #----Connect to DB
 db = mysql.connector.connect(
@@ -31,7 +31,23 @@ for account in account_ids:
     print(account)
     temp = qtrade.get_account_positions(account_id=account)
     positions = positions + temp 
-#----/Get info flor Questrade
+#----/Get info from Questrade
+
+#---------------------getday
+today = date.today()
+d1 = today.strftime("%Y-%m-%d")
+#---------------------import sql
+
+#----get latest date from DB
+dboverall = None
+sqlstuff = ("SELECT * FROM Overall "
+         "WHERE Date = %s and BookValue >= %s")
+d2 = 0
+record1 = (d1, d2)
+mycursor.execute(sqlstuff, record1)
+dboverall = mycursor.fetchall()
+#----------------------
+
 #----Get Overal info
 c = CurrencyRates()
 Bookvalue = 0
@@ -46,13 +62,14 @@ for item in positions:
         MarketValue = c.convert('USD', 'CAD', item['currentMarketValue']) + MarketValue
 
 PL = MarketValue - Bookvalue
-#---------------------getday
-today = date.today()
-d1 = today.strftime("%Y/%m/%d")
-#---------------------import sql
-
-sqlstuff = "INSERT INTO Overall (Date, BookValue, MarketValue, MarketPL) VALUES (%s,%s,%s,%s)"
-record1 = (d1, Bookvalue, MarketValue, PL)
-mycursor.execute(sqlstuff, record1)
-db.commit()
+#----/Get Overal info
+#----Check if record has been added
+if dboverall == None:
+    sqlstuff = "INSERT INTO Overall (Date, BookValue, MarketValue, MarketPL) VALUES (%s,%s,%s,%s)"
+    record1 = (d1, Bookvalue, MarketValue, PL)
+    mycursor.execute(sqlstuff, record1)
+    db.commit()
+else: 
+    print ("Daily Overall has been added already.")
+#----/Check if record has been added
        
