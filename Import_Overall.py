@@ -39,7 +39,7 @@ d1 = today.strftime("%Y-%m-%d")
 #---------------------import sql
 
 #----get latest date from DB
-dboverall = None
+dboverall = []
 sqlstuff = ("SELECT * FROM Overall "
          "WHERE Date = %s and BookValue >= %s")
 d2 = 0
@@ -64,7 +64,7 @@ for item in positions:
 PL = MarketValue - Bookvalue
 #----/Get Overal info
 #----Check if record has been added
-if dboverall == None:
+if not dboverall:
     sqlstuff = "INSERT INTO Overall (Date, BookValue, MarketValue, MarketPL) VALUES (%s,%s,%s,%s)"
     record1 = (d1, Bookvalue, MarketValue, PL)
     mycursor.execute(sqlstuff, record1)
