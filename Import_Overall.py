@@ -120,7 +120,7 @@ for item in positions:
         record1 = (placeitem['openQuantity'], placeitem['totalCost'], placeitem['averageEntryPrice'], placeitem['currentPrice'], placeitem['currentMarketValue'], placeitem['openPnl'], placeitem['symbol'])
         mycursor.execute(sqlstuff, record1)
         db.commit()
-        print("UPDATED DOUBLES", placeitem['openQuantity'], placeitem['totalCost'])
+        print("UPDATED DOUBLES",placeitem['symbol'] placeitem['openQuantity'], placeitem['totalCost'])
     if ismorethanone >= 2 and doubleadded == 'no' or doubleadded == 'yes':
         print ("doubled and nothing happends")
     else:     
@@ -128,8 +128,41 @@ for item in positions:
         record1 = (item['openQuantity'], item['totalCost'], item['averageEntryPrice'], item['currentPrice'], item['currentMarketValue'], item['openPnl'], item['symbol'])
         mycursor.execute(sqlstuff, record1)
         db.commit()
-        print("UPDATED SINGLES", item['openQuantity'], item['totalCost'])
+        print("UPDATED SINGLES", item['symbol'], item['openQuantity'], item['totalCost'])
 
 #UPDATING CURRENT POSITIONS TABLE -----------end
+#UPDATING OPERATIONS-----------------------------
+import datetime
+activities = []
+today = date.today()
+today = today.strftime("%Y-%m-%d")
 
+for account in account_ids:
+    print(account)
+    activities = qtrade.get_account_activities(account, today, today) + activities
 
+mycursor.execute("select * from Operations")
+dbactivities = mycursor.fetchall()
+
+i=1
+for item in activities:
+    opitem = 0
+    dateitem = []
+    dateitem = item['tradeDate']
+    dateitem = datetime.datetime.strptime(dateitem, "%Y-%m-%dT%H:%M:%S.%f-05:00")
+    dateitem = datetime.datetime.date(dateitem)
+    for dbitem in dbactivities:
+        netdbitem = dbitem[9]
+        netdbitem = float(netdbitem)
+        if item['netAmount'] == netdbitem and item['symbol'] == dbitem[3] and item['quantity'] == dbitem[5] and dateitem == dbitem[1]:
+            opitem = 1
+    if opitem == 0:
+        print ("\n The symbol is", item['symbol'], "and the total amount is", item['netAmount'],"the quantity is", item['quantity'], "and number #", i, "and the date is:", dateitem)
+        print ("Add to the database")
+        sqlstuff = "INSERT INTO Operations (TransactionDate, Action, Symbol, Description, Quantity, Price, GrossAmount, Commission, NetAmount, Currency, ActivityType) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        record1 = (item['tradeDate'], item['action'], item['symbol'],item['description'],item['quantity'],item['price'],item['grossAmount'],item['commission'],item['netAmount'],item['currency'],item['type'])
+        mycursor.execute(sqlstuff, record1)
+        db.commit()
+    i = i + 1
+today = date.today()
+today = today.strftime("%Y-%m-%d")
