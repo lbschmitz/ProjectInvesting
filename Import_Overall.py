@@ -72,4 +72,62 @@ if not dboverall:
 else: 
     print ("Daily Overall has been added already.")
 #----/Check if record has been added
-       
+
+
+#UPDATING CURRENT POSITIONS TABLE
+#----Search current positions table
+mycursor.execute("select * from Positions")
+dbpositions = mycursor.fetchall()
+for item in dbpositions:
+    item[0]       
+#----/Search current positions table
+for item in positions: 
+    test = item['symbol']
+    inthetable = 'no' #placeholder to see if a new stock has been added
+    ismorethanone = 0
+    doubleadded = 'no'
+    for checkitem in positions: #Check if I have the same security in more than one account
+        if item['symbol'] == checkitem['symbol']:
+            ismorethanone = ismorethanone + 1
+            doubleadded = 'no'
+            if ismorethanone >= 2 and item['openQuantity'] != checkitem['openQuantity']:
+                item
+                placeitem = item.copy()
+                placeitem['openQuantity'] = placeitem['openQuantity'] + checkitem['openQuantity']
+                placeitem['totalCost'] = placeitem['totalCost'] + checkitem['totalCost']
+                placeitem['averageEntryPrice'] = placeitem['totalCost'] / placeitem['openQuantity'] 
+                placeitem['currentMarketValue'] = placeitem['currentMarketValue'] + checkitem['currentMarketValue']
+                placeitem['openPnl'] = placeitem['openPnl'] + checkitem['openPnl']
+                placeitem
+                item
+                checkitem
+                #print(item['symbol'], item['openQuantity'], checkitem['symbol'], checkitem['openQuantity'])
+                doubleadded = 'yes'
+    for dbitem in dbpositions:
+        test2 = dbitem[0]
+        if test == test2:
+            #print("Found")
+            inthetable = 'yes'
+    if inthetable == 'no': #in case the stock is new!
+        print("This stock", item['symbol'], "isn't on the table, we need to add")
+        sqlstuff = "INSERT INTO Positions (Ticker, Shares) VALUES (%s,%s)"
+        record1 = (item['symbol'], item['openQuantity'])
+        mycursor.execute(sqlstuff, record1)
+        db.commit()
+        if inthetable != 'yes':
+            print("This stock", item['symbol'], "wasn't on the tabel, so we added!")
+    #print (item['symbol'], "has showed up", ismorethanone)
+    if ismorethanone >= 2 and doubleadded == 'yes':
+        sqlstuff = "UPDATE Positions SET Shares = %s, CostBasis =%s, CostperShare =%s, CurrentPrice =%s, MarketValue =%s, PLMarket =%s WHERE Ticker = %s"
+        record1 = (placeitem['openQuantity'], placeitem['totalCost'], placeitem['averageEntryPrice'], placeitem['currentPrice'], placeitem['currentMarketValue'], placeitem['openPnl'], placeitem['symbol'])
+        mycursor.execute(sqlstuff, record1)
+        db.commit()
+    if ismorethanone >= 2 and doubleadded == 'no':
+        print ("doubled and nothing happends")
+    else:     
+        sqlstuff = "UPDATE Positions SET Shares = %s, CostBasis =%s, CostperShare =%s, CurrentPrice =%s, MarketValue =%s, PLMarket =%s WHERE Ticker = %s"
+        record1 = (item['openQuantity'], item['totalCost'], item['averageEntryPrice'], item['currentPrice'], item['currentMarketValue'], item['openPnl'], item['symbol'])
+        mycursor.execute(sqlstuff, record1)
+        db.commit()
+
+
