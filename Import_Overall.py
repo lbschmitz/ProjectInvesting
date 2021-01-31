@@ -120,7 +120,7 @@ for item in positions:
         record1 = (placeitem['openQuantity'], placeitem['totalCost'], placeitem['averageEntryPrice'], placeitem['currentPrice'], placeitem['currentMarketValue'], placeitem['openPnl'], placeitem['symbol'])
         mycursor.execute(sqlstuff, record1)
         db.commit()
-        print("UPDATED DOUBLES", placeitem['symbol'] placeitem['openQuantity'], placeitem['totalCost'])
+        print("UPDATED DOUBLES", placeitem['symbol'], placeitem['openQuantity'], placeitem['totalCost'])
     if ismorethanone >= 2 and doubleadded == 'no' or doubleadded == 'yes':
         print ("doubled and nothing happends")
     else:     
