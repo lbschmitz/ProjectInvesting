@@ -113,7 +113,7 @@ for item in positions:
         if inthetable != 'yes':
             print("This stock", item['symbol'], "wasn't on the tabel, so we added!")
     #print (item['symbol'], "has showed up", ismorethanone)
-    print (item['symbol'], doubleadded)
+    #print (item['symbol'], doubleadded)
     #input()
     if ismorethanone >= 2 and doubleadded == 'yes':
         sqlstuff = "UPDATE Positions SET Shares = %s, CostBasis =%s, CostperShare =%s, CurrentPrice =%s, MarketValue =%s, PLMarket =%s WHERE Ticker = %s"
