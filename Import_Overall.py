@@ -90,7 +90,7 @@ for item in positions:
         if item['symbol'] == checkitem['symbol']:
             ismorethanone = ismorethanone + 1
             doubleadded = 'no'
-            if ismorethanone >= 2 and item['openQuantity'] != checkitem['openQuantity']:
+            if ismorethanone >= 2 and item['openQuantity'] != checkitem['openQuantity']: #if to sum the doubles
                 item
                 placeitem = item.copy()
                 placeitem['openQuantity'] = placeitem['openQuantity'] + checkitem['openQuantity']
@@ -98,10 +98,6 @@ for item in positions:
                 placeitem['averageEntryPrice'] = placeitem['totalCost'] / placeitem['openQuantity'] 
                 placeitem['currentMarketValue'] = placeitem['currentMarketValue'] + checkitem['currentMarketValue']
                 placeitem['openPnl'] = placeitem['openPnl'] + checkitem['openPnl']
-                placeitem
-                item
-                checkitem
-                #print(item['symbol'], item['openQuantity'], checkitem['symbol'], checkitem['openQuantity'])
                 doubleadded = 'yes'
     for dbitem in dbpositions:
         test2 = dbitem[0]
@@ -117,17 +113,23 @@ for item in positions:
         if inthetable != 'yes':
             print("This stock", item['symbol'], "wasn't on the tabel, so we added!")
     #print (item['symbol'], "has showed up", ismorethanone)
+    print (item['symbol'], doubleadded)
+    #input()
     if ismorethanone >= 2 and doubleadded == 'yes':
         sqlstuff = "UPDATE Positions SET Shares = %s, CostBasis =%s, CostperShare =%s, CurrentPrice =%s, MarketValue =%s, PLMarket =%s WHERE Ticker = %s"
         record1 = (placeitem['openQuantity'], placeitem['totalCost'], placeitem['averageEntryPrice'], placeitem['currentPrice'], placeitem['currentMarketValue'], placeitem['openPnl'], placeitem['symbol'])
         mycursor.execute(sqlstuff, record1)
         db.commit()
-    if ismorethanone >= 2 and doubleadded == 'no':
+        print("UPDATED DOUBLES", placeitem['openQuantity'], placeitem['totalCost'])
+    if ismorethanone >= 2 and doubleadded == 'no' or doubleadded == 'yes':
         print ("doubled and nothing happends")
     else:     
         sqlstuff = "UPDATE Positions SET Shares = %s, CostBasis =%s, CostperShare =%s, CurrentPrice =%s, MarketValue =%s, PLMarket =%s WHERE Ticker = %s"
         record1 = (item['openQuantity'], item['totalCost'], item['averageEntryPrice'], item['currentPrice'], item['currentMarketValue'], item['openPnl'], item['symbol'])
         mycursor.execute(sqlstuff, record1)
         db.commit()
+        print("UPDATED SINGLES", item['openQuantity'], item['totalCost'])
+
+#UPDATING CURRENT POSITIONS TABLE -----------end
 
 
