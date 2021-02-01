@@ -62,11 +62,12 @@ for item in positions:
         MarketValue = c.convert('USD', 'CAD', item['currentMarketValue']) + MarketValue
 
 PL = MarketValue - Bookvalue
+MarketPLPercent = Bookvalue * 100 / PL
 #----/Get Overal info
 #----Check if record has been added
 if not dboverall:
-    sqlstuff = "INSERT INTO Overall (Date, BookValue, MarketValue, MarketPL) VALUES (%s,%s,%s,%s)"
-    record1 = (d1, Bookvalue, MarketValue, PL)
+    sqlstuff = "INSERT INTO Overall (Date, BookValue, MarketValue, MarketPL, MarketPLPercent) VALUES (%s,%s,%s,%s,%s)"
+    record1 = (d1, Bookvalue, MarketValue, PL, MarketPLPercent)
     mycursor.execute(sqlstuff, record1)
     db.commit()
 else: 
