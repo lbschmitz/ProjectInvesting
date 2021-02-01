@@ -93,6 +93,7 @@ for item in positions:
             ismorethanone = ismorethanone + 1
             doubleadded = 'no'
             Totalforpercent2 = Totalforpercent2 + item['currentMarketValue']
+            print ("This item is", item['symbol'], "and toatal market value is", item['currentMarketValue'], "and the totalpercent is", Totalforpercent2)
             if ismorethanone >= 2 and item['openQuantity'] != checkitem['openQuantity']: #if to sum the doubles
                 item
                 placeitem = item.copy()
