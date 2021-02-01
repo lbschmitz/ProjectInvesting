@@ -63,6 +63,9 @@ for item in positions:
 
 PL = MarketValue - Bookvalue
 MarketPLPercent = Bookvalue / PL
+print ("Bookvalue", Bookvalue)
+print ("PL", PL)
+print ("MarketPL", MarketPLPercent)
 #----/Get Overal info
 #----Check if record has been added
 if not dboverall:
