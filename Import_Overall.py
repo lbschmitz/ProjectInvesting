@@ -78,7 +78,8 @@ else:
 #----Search current positions table
 mycursor.execute("select * from Positions")
 dbpositions = mycursor.fetchall()
-Totalforpercent = 0 
+Totalforpercent = 0
+Totalforpercent2 = 0  
 for item in dbpositions:
     item[0]       
 #----/Search current positions table
@@ -91,6 +92,7 @@ for item in positions:
         if item['symbol'] == checkitem['symbol']:
             ismorethanone = ismorethanone + 1
             doubleadded = 'no'
+            Totalforpercent2 = Totalforpercent2 + item['currentMarketValue']
             if ismorethanone >= 2 and item['openQuantity'] != checkitem['openQuantity']: #if to sum the doubles
                 item
                 placeitem = item.copy()
@@ -100,6 +102,7 @@ for item in positions:
                 placeitem['currentMarketValue'] = placeitem['currentMarketValue'] + checkitem['currentMarketValue']
                 placeitem['openPnl'] = placeitem['openPnl'] + checkitem['openPnl']
                 doubleadded = 'yes'
+    print ("Total amount of money is 22222   ", Totalforpercent2)
     for dbitem in dbpositions:
         test2 = dbitem[0]
         if test == test2:
