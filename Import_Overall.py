@@ -116,8 +116,13 @@ for item in positions:
     #print (item['symbol'], doubleadded)
     #input()
     if ismorethanone >= 2 and doubleadded == 'yes':
-        itempercent = placeitem['currentMarketValue'] * 100 /MarketValue
+        if substring in item["symbol"]:
+        priceincad = placeitem['currentMarketValue'] 
+        else:
+        priceincad = c.convert('USD', 'CAD', placeitem['currentMarketValue'])
+        itempercent = priceincad * 100 /MarketValue
         print ("percentage is", itempercent)
+        print ("prince in cad is", priceincad)
         print("UPDATED DOUBLES", placeitem['symbol'], placeitem['openQuantity'], placeitem['totalCost'])
         sqlstuff = "UPDATE Positions SET Shares = %s, CostBasis =%s, CostperShare =%s, CurrentPrice =%s, MarketValue =%s, PLMarket =%s, PLPercentage = %s WHERE Ticker = %s"
         record1 = (placeitem['openQuantity'], placeitem['totalCost'], placeitem['averageEntryPrice'], placeitem['currentPrice'], placeitem['currentMarketValue'], placeitem['openPnl'],itempercent, placeitem['symbol'])
@@ -128,8 +133,13 @@ for item in positions:
     if ismorethanone >= 2 and doubleadded == 'no' or doubleadded == 'yes':
         print ("doubled and nothing happends")
     else:     
-        itempercent = item['currentMarketValue'] * 100 /MarketValue
+        if substring in item["symbol"]:
+        priceincad = item['currentMarketValue'] 
+        else:
+        priceincad = c.convert('USD', 'CAD', item['currentMarketValue'])
+        itempercent = priceincad * 100 /MarketValue
         print ("percentage is", itempercent)
+        print ("prince in cad is", priceincad)
         sqlstuff = "UPDATE Positions SET Shares = %s, CostBasis =%s, CostperShare =%s, CurrentPrice =%s, MarketValue =%s, PLMarket =%s, PLPercentage = %s WHERE Ticker = %s"
         record1 = (item['openQuantity'], item['totalCost'], item['averageEntryPrice'], item['currentPrice'], item['currentMarketValue'], item['openPnl'], itempercent, item['symbol'])
         mycursor.execute(sqlstuff, record1)
