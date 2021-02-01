@@ -121,6 +121,7 @@ for item in positions:
         mycursor.execute(sqlstuff, record1)
         db.commit()
         print("UPDATED DOUBLES", placeitem['symbol'], placeitem['openQuantity'], placeitem['totalCost'])
+        Totalforpercent = Totalforpercent + placeitem['currentMarketValue']
     if ismorethanone >= 2 and doubleadded == 'no' or doubleadded == 'yes':
         print ("doubled and nothing happends")
     else:     
@@ -129,7 +130,10 @@ for item in positions:
         mycursor.execute(sqlstuff, record1)
         db.commit()
         print("UPDATED SINGLES", item['symbol'], item['openQuantity'], item['totalCost'])
+        Totalforpercent = Totalforpercent + placeitem['currentMarketValue']
 
+
+print ("this is the total market valeu", Totalforpercent)
 #UPDATING CURRENT POSITIONS TABLE -----------end
 #UPDATING OPERATIONS-----------------------------
 import datetime
