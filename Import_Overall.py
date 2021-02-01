@@ -62,7 +62,7 @@ for item in positions:
         MarketValue = c.convert('USD', 'CAD', item['currentMarketValue']) + MarketValue
 
 PL = MarketValue - Bookvalue
-MarketPLPercent = Bookvalue * 100 / PL
+MarketPLPercent = Bookvalue / PL
 #----/Get Overal info
 #----Check if record has been added
 if not dboverall:
