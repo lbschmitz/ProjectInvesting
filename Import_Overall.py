@@ -117,9 +117,9 @@ for item in positions:
     #input()
     if ismorethanone >= 2 and doubleadded == 'yes':
         if substring in item["symbol"]:
-        priceincad = placeitem['currentMarketValue'] 
+            priceincad = placeitem['currentMarketValue'] 
         else:
-        priceincad = c.convert('USD', 'CAD', placeitem['currentMarketValue'])
+            priceincad = c.convert('USD', 'CAD', placeitem['currentMarketValue'])
         itempercent = priceincad * 100 /MarketValue
         print ("percentage is", itempercent)
         print ("prince in cad is", priceincad)
@@ -134,9 +134,9 @@ for item in positions:
         print ("doubled and nothing happends")
     else:     
         if substring in item["symbol"]:
-        priceincad = item['currentMarketValue'] 
+            priceincad = item['currentMarketValue'] 
         else:
-        priceincad = c.convert('USD', 'CAD', item['currentMarketValue'])
+            priceincad = c.convert('USD', 'CAD', item['currentMarketValue'])
         itempercent = priceincad * 100 /MarketValue
         print ("percentage is", itempercent)
         print ("prince in cad is", priceincad)
