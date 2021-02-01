@@ -99,7 +99,6 @@ for item in positions:
                 placeitem['currentMarketValue'] = placeitem['currentMarketValue'] + checkitem['currentMarketValue']
                 placeitem['openPnl'] = placeitem['openPnl'] + checkitem['openPnl']
                 doubleadded = 'yes'
-    print ("Total amount of money is 22222   ", Totalforpercent2)
     for dbitem in dbpositions:
         test2 = dbitem[0]
         if test == test2:
