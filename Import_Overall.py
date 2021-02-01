@@ -78,8 +78,6 @@ else:
 #----Search current positions table
 mycursor.execute("select * from Positions")
 dbpositions = mycursor.fetchall()
-Totalforpercent = 0
-Totalforpercent2 = 0  
 for item in dbpositions:
     item[0]       
 #----/Search current positions table
@@ -92,8 +90,6 @@ for item in positions:
         if item['symbol'] == checkitem['symbol']:
             ismorethanone = ismorethanone + 1
             doubleadded = 'no'
-            Totalforpercent2 = Totalforpercent2 + item['currentMarketValue']
-            print ("This item is", item['symbol'], "and toatal market value is", item['currentMarketValue'], "and the totalpercent is", Totalforpercent2)
             if ismorethanone >= 2 and item['openQuantity'] != checkitem['openQuantity']: #if to sum the doubles
                 item
                 placeitem = item.copy()
@@ -125,8 +121,9 @@ for item in positions:
         record1 = (placeitem['openQuantity'], placeitem['totalCost'], placeitem['averageEntryPrice'], placeitem['currentPrice'], placeitem['currentMarketValue'], placeitem['openPnl'], placeitem['symbol'])
         mycursor.execute(sqlstuff, record1)
         db.commit()
+        itempercent = placeitem['currentMarketValue'] * 100 /MarketValue
+        print ("percentage is", itempercent)
         print("UPDATED DOUBLES", placeitem['symbol'], placeitem['openQuantity'], placeitem['totalCost'])
-        Totalforpercent = Totalforpercent + placeitem['currentMarketValue']
     if ismorethanone >= 2 and doubleadded == 'no' or doubleadded == 'yes':
         print ("doubled and nothing happends")
     else:     
@@ -135,10 +132,10 @@ for item in positions:
         mycursor.execute(sqlstuff, record1)
         db.commit()
         print("UPDATED SINGLES", item['symbol'], item['openQuantity'], item['totalCost'])
-        Totalforpercent = Totalforpercent + item['currentMarketValue']
+        itempercent = item['currentMarketValue'] * 100 /MarketValue
+        print ("percentage is", itempercent)
 
 
-print ("this is the total market valeu", Totalforpercent)
 #UPDATING CURRENT POSITIONS TABLE -----------end
 #UPDATING OPERATIONS-----------------------------
 import datetime
