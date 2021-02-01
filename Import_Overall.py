@@ -119,7 +119,7 @@ for item in positions:
         itempercent = placeitem['currentMarketValue'] * 100 /MarketValue
         print ("percentage is", itempercent)
         print("UPDATED DOUBLES", placeitem['symbol'], placeitem['openQuantity'], placeitem['totalCost'])
-        sqlstuff = "UPDATE Positions SET Shares = %s, CostBasis =%s, CostperShare =%s, CurrentPrice =%s, MarketValue =%s, PLMarket =%s, PLPercentage = %S WHERE Ticker = %s"
+        sqlstuff = "UPDATE Positions SET Shares = %s, CostBasis =%s, CostperShare =%s, CurrentPrice =%s, MarketValue =%s, PLMarket =%s, PLPercentage = %s WHERE Ticker = %s"
         record1 = (placeitem['openQuantity'], placeitem['totalCost'], placeitem['averageEntryPrice'], placeitem['currentPrice'], placeitem['currentMarketValue'], placeitem['openPnl'],itempercent, placeitem['symbol'])
         mycursor.execute(sqlstuff, record1)
         db.commit()
@@ -130,8 +130,8 @@ for item in positions:
     else:     
         itempercent = item['currentMarketValue'] * 100 /MarketValue
         print ("percentage is", itempercent)
-        sqlstuff = "UPDATE Positions SET Shares = %s, CostBasis =%s, CostperShare =%s, CurrentPrice =%s, MarketValue =%s, PLMarket =%s WHERE Ticker = %s"
-        record1 = (item['openQuantity'], item['totalCost'], item['averageEntryPrice'], item['currentPrice'], item['currentMarketValue'], item['openPnl'],itempercent, item['symbol'])
+        sqlstuff = "UPDATE Positions SET Shares = %s, CostBasis =%s, CostperShare =%s, CurrentPrice =%s, MarketValue =%s, PLMarket =%s, PLPercentage = %s WHERE Ticker = %s"
+        record1 = (item['openQuantity'], item['totalCost'], item['averageEntryPrice'], item['currentPrice'], item['currentMarketValue'], item['openPnl'], itempercent, item['symbol'])
         mycursor.execute(sqlstuff, record1)
         db.commit()
         print("UPDATED SINGLES", item['symbol'], item['openQuantity'], item['totalCost'])
