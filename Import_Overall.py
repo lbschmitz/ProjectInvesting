@@ -131,7 +131,7 @@ for item in positions:
         mycursor.execute(sqlstuff, record1)
         db.commit()
         print("UPDATED SINGLES", item['symbol'], item['openQuantity'], item['totalCost'])
-        Totalforpercent = Totalforpercent + placeitem['currentMarketValue']
+        Totalforpercent = Totalforpercent + item['currentMarketValue']
 
 
 print ("this is the total market valeu", Totalforpercent)
