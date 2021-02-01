@@ -86,6 +86,7 @@ for item in positions:
     inthetable = 'no' #placeholder to see if a new stock has been added
     ismorethanone = 0
     doubleadded = 'no'
+    Totalforpercent = 0 
     for checkitem in positions: #Check if I have the same security in more than one account
         if item['symbol'] == checkitem['symbol']:
             ismorethanone = ismorethanone + 1
