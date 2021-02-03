@@ -4,7 +4,9 @@
 - Goals
 
 -Create a data history value and return of a stock portfolio at Questrade
+
 -Monitor daily dividends 
+
 -Converting currencies
 
 
