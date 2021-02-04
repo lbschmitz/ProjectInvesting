@@ -128,7 +128,7 @@ for item in positions:
         print ("percentage is", itempercent)
         print ("prince in cad is", priceincad)
         print("UPDATED DOUBLES", placeitem['symbol'], placeitem['openQuantity'], placeitem['totalCost'])
-        sqlstuff = "UPDATE Positions SET Shares = %s, CostBasis =%s, CostperShare =%s, CurrentPrice =%s, MarketValue =%s, PLMarket =%s, PLPercentage = %s WHERE Ticker = %s"
+        sqlstuff = "UPDATE Positions SET Shares = %s, CostBasis =%s, CostperShare =%s, CurrentPrice =%s, MarketValue =%s, PLMarket =%s, TotalPercentage = %s = %s WHERE Ticker = %s"
         record1 = (placeitem['openQuantity'], placeitem['totalCost'], placeitem['averageEntryPrice'], placeitem['currentPrice'], placeitem['currentMarketValue'], placeitem['openPnl'],itempercent, placeitem['symbol'])
         mycursor.execute(sqlstuff, record1)
         db.commit()
@@ -144,7 +144,7 @@ for item in positions:
         itempercent = priceincad * 100 /MarketValue
         print ("percentage is", itempercent)
         print ("prince in cad is", priceincad)
-        sqlstuff = "UPDATE Positions SET Shares = %s, CostBasis =%s, CostperShare =%s, CurrentPrice =%s, MarketValue =%s, PLMarket =%s, PLPercentage = %s WHERE Ticker = %s"
+        sqlstuff = "UPDATE Positions SET Shares = %s, CostBasis =%s, CostperShare =%s, CurrentPrice =%s, MarketValue =%s, PLMarket =%s, TotalPercentage = %s WHERE Ticker = %s"
         record1 = (item['openQuantity'], item['totalCost'], item['averageEntryPrice'], item['currentPrice'], item['currentMarketValue'], item['openPnl'], itempercent, item['symbol'])
         mycursor.execute(sqlstuff, record1)
         db.commit()
@@ -188,3 +188,4 @@ for item in activities:
     i = i + 1
 today = date.today()
 today = today.strftime("%Y-%m-%d")
+#------------------------------------------------------
