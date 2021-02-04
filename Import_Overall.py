@@ -127,11 +127,12 @@ for item in positions:
             bookcad = c.convert('USD', 'CAD', placeitem['totalCost'])
             marketcad = c.convert('USD', 'CAD', placeitem['currentMarketValue'])
         itempercent = marketcad * 100 /MarketValue
+        plpercent = (placeitem['openPnl'] * 100) / placeitem['totalCost']
         print ("percentage is", itempercent)
         print ("prince in cad is", marketcad)
         print("UPDATED DOUBLES", placeitem['symbol'], placeitem['openQuantity'], placeitem['totalCost'])
-        sqlstuff = "UPDATE Positions SET Shares = %s, CostBasis =%s, CostperShare =%s, CurrentPrice =%s, MarketValue =%s, PLMarket =%s, TotalPercentage = %s, BookCad = %s, MarketCad = %s WHERE Ticker = %s"
-        record1 = (placeitem['openQuantity'], placeitem['totalCost'], placeitem['averageEntryPrice'], placeitem['currentPrice'], placeitem['currentMarketValue'], placeitem['openPnl'],itempercent, bookcad, marketcad, placeitem['symbol'])
+        sqlstuff = "UPDATE Positions SET Shares = %s, CostBasis =%s, CostperShare =%s, CurrentPrice =%s, MarketValue =%s, PLMarket =%s, plpercent = %s, TotalPercentage = %s, BookCad = %s, MarketCad = %s WHERE Ticker = %s"
+        record1 = (placeitem['openQuantity'], placeitem['totalCost'], placeitem['averageEntryPrice'], placeitem['currentPrice'], placeitem['currentMarketValue'], placeitem['openPnl'], plpercent, itempercent, bookcad, marketcad, placeitem['symbol'])
         mycursor.execute(sqlstuff, record1)
         db.commit()
         
@@ -148,8 +149,8 @@ for item in positions:
         itempercent = marketcad * 100 /MarketValue
         print ("percentage is", itempercent)
         print ("prince in cad is", marketcad)
-        sqlstuff = "UPDATE Positions SET Shares = %s, CostBasis =%s, CostperShare =%s, CurrentPrice =%s, MarketValue =%s, PLMarket =%s, TotalPercentage = %s, BookCad = %s, MarketCad = %s  WHERE Ticker = %s"
-        record1 = (item['openQuantity'], item['totalCost'], item['averageEntryPrice'], item['currentPrice'], item['currentMarketValue'], item['openPnl'], itempercent, bookcad, marketcad, item['symbol'])
+        sqlstuff = "UPDATE Positions SET Shares = %s, CostBasis =%s, CostperShare =%s, CurrentPrice =%s, MarketValue =%s, PLMarket =%s, plpercent = %s, TotalPercentage = %s, BookCad = %s, MarketCad = %s  WHERE Ticker = %s"
+        record1 = (item['openQuantity'], item['totalCost'], item['averageEntryPrice'], item['currentPrice'], item['currentMarketValue'], item['openPnl'], plpercent, itempercent, bookcad, marketcad, item['symbol'])
         mycursor.execute(sqlstuff, record1)
         db.commit()
         print("UPDATED SINGLES", item['symbol'], item['openQuantity'], item['totalCost'])
