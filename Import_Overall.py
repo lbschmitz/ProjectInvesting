@@ -121,12 +121,12 @@ for item in positions:
     #input()
     if ismorethanone >= 2 and doubleadded == 'yes':
         if substring in item["symbol"]:
-            priceincad = placeitem['currentMarketValue'] 
+            marketcad = placeitem['currentMarketValue'] 
         else:
-            priceincad = c.convert('USD', 'CAD', placeitem['currentMarketValue'])
-        itempercent = priceincad * 100 /MarketValue
+            marketcad = c.convert('USD', 'CAD', placeitem['currentMarketValue'])
+        itempercent = marketcad * 100 /MarketValue
         print ("percentage is", itempercent)
-        print ("prince in cad is", priceincad)
+        print ("prince in cad is", marketcad)
         print("UPDATED DOUBLES", placeitem['symbol'], placeitem['openQuantity'], placeitem['totalCost'])
         sqlstuff = "UPDATE Positions SET Shares = %s, CostBasis =%s, CostperShare =%s, CurrentPrice =%s, MarketValue =%s, PLMarket =%s, TotalPercentage = %s WHERE Ticker = %s"
         record1 = (placeitem['openQuantity'], placeitem['totalCost'], placeitem['averageEntryPrice'], placeitem['currentPrice'], placeitem['currentMarketValue'], placeitem['openPnl'],itempercent, placeitem['symbol'])
@@ -138,12 +138,12 @@ for item in positions:
         print ("doubled and nothing happends")
     else:     
         if substring in item["symbol"]:
-            priceincad = item['currentMarketValue'] 
+            marketcad = item['currentMarketValue'] 
         else:
-            priceincad = c.convert('USD', 'CAD', item['currentMarketValue'])
-        itempercent = priceincad * 100 /MarketValue
+            marketcad = c.convert('USD', 'CAD', item['currentMarketValue'])
+        itempercent = marketcad * 100 /MarketValue
         print ("percentage is", itempercent)
-        print ("prince in cad is", priceincad)
+        print ("prince in cad is", marketcad)
         sqlstuff = "UPDATE Positions SET Shares = %s, CostBasis =%s, CostperShare =%s, CurrentPrice =%s, MarketValue =%s, PLMarket =%s, TotalPercentage = %s WHERE Ticker = %s"
         record1 = (item['openQuantity'], item['totalCost'], item['averageEntryPrice'], item['currentPrice'], item['currentMarketValue'], item['openPnl'], itempercent, item['symbol'])
         mycursor.execute(sqlstuff, record1)
