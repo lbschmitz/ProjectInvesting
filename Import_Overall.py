@@ -120,16 +120,18 @@ for item in positions:
     #print (item['symbol'], doubleadded)
     #input()
     if ismorethanone >= 2 and doubleadded == 'yes':
-        if substring in item["symbol"]:
+        if substring in item["symbol"]: #CHECK IF STOCK IS CAD/USD
+            bookcad = placeitem['totalCost'] 
             marketcad = placeitem['currentMarketValue'] 
         else:
+            bookcad = c.convert('USD', 'CAD', placeitem['totalCost'])
             marketcad = c.convert('USD', 'CAD', placeitem['currentMarketValue'])
         itempercent = marketcad * 100 /MarketValue
         print ("percentage is", itempercent)
         print ("prince in cad is", marketcad)
         print("UPDATED DOUBLES", placeitem['symbol'], placeitem['openQuantity'], placeitem['totalCost'])
-        sqlstuff = "UPDATE Positions SET Shares = %s, CostBasis =%s, CostperShare =%s, CurrentPrice =%s, MarketValue =%s, PLMarket =%s, TotalPercentage = %s WHERE Ticker = %s"
-        record1 = (placeitem['openQuantity'], placeitem['totalCost'], placeitem['averageEntryPrice'], placeitem['currentPrice'], placeitem['currentMarketValue'], placeitem['openPnl'],itempercent, placeitem['symbol'])
+        sqlstuff = "UPDATE Positions SET Shares = %s, CostBasis =%s, CostperShare =%s, CurrentPrice =%s, MarketValue =%s, PLMarket =%s, TotalPercentage = %s, BookCad = %s, MarketCad = %s WHERE Ticker = %s"
+        record1 = (placeitem['openQuantity'], placeitem['totalCost'], placeitem['averageEntryPrice'], placeitem['currentPrice'], placeitem['currentMarketValue'], placeitem['openPnl'],itempercent, bookcad, marketcad, placeitem['symbol'])
         mycursor.execute(sqlstuff, record1)
         db.commit()
         
@@ -138,14 +140,16 @@ for item in positions:
         print ("doubled and nothing happends")
     else:     
         if substring in item["symbol"]:
+            bookcad = item['totalCost'] 
             marketcad = item['currentMarketValue'] 
         else:
+            bookcad = c.convert('USD', 'CAD', item['totalCost'])
             marketcad = c.convert('USD', 'CAD', item['currentMarketValue'])
         itempercent = marketcad * 100 /MarketValue
         print ("percentage is", itempercent)
         print ("prince in cad is", marketcad)
-        sqlstuff = "UPDATE Positions SET Shares = %s, CostBasis =%s, CostperShare =%s, CurrentPrice =%s, MarketValue =%s, PLMarket =%s, TotalPercentage = %s WHERE Ticker = %s"
-        record1 = (item['openQuantity'], item['totalCost'], item['averageEntryPrice'], item['currentPrice'], item['currentMarketValue'], item['openPnl'], itempercent, item['symbol'])
+        sqlstuff = "UPDATE Positions SET Shares = %s, CostBasis =%s, CostperShare =%s, CurrentPrice =%s, MarketValue =%s, PLMarket =%s, TotalPercentage = %s, BookCad = %s, MarketCad = %s  WHERE Ticker = %s"
+        record1 = (item['openQuantity'], item['totalCost'], item['averageEntryPrice'], item['currentPrice'], item['currentMarketValue'], item['openPnl'], itempercent, bookcad, marketcad, item['symbol'])
         mycursor.execute(sqlstuff, record1)
         db.commit()
         print("UPDATED SINGLES", item['symbol'], item['openQuantity'], item['totalCost'])
