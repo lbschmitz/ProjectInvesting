@@ -62,7 +62,7 @@ for item in positions:
         MarketValue = c.convert('USD', 'CAD', item['currentMarketValue']) + MarketValue
 
 PL = MarketValue - Bookvalue
-MarketPLPercent = Bookvalue / PL
+MarketPLPercent = PL / Bookvalue
 print ("Bookvalue", Bookvalue)
 print ("PL", PL)
 print ("MarketPL", MarketPLPercent)
@@ -195,3 +195,4 @@ for item in activities:
 today = date.today()
 today = today.strftime("%Y-%m-%d")
 #------------------------------------------------------
+#--------Check Dividends and import them
