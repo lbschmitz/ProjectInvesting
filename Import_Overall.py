@@ -62,7 +62,7 @@ for item in positions:
         MarketValue = c.convert('USD', 'CAD', item['currentMarketValue']) + MarketValue
 
 PL = MarketValue - Bookvalue
-MarketPLPercent = PL / Bookvalue
+MarketPLPercent = (PL * 100) / Bookvalue
 print ("Bookvalue", Bookvalue)
 print ("PL", PL)
 print ("MarketPL", MarketPLPercent)
