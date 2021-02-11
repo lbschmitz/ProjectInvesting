@@ -110,6 +110,7 @@ for item in positions:
             #print("Found")
             inthetable = 'yes'
             divcalc = dbitem[9]
+            Decimal(divcalc)
     if inthetable == 'no': #in case the stock is new!
         print("This stock", item['symbol'], "isn't on the table, we need to add")
         sqlstuff = "INSERT INTO Positions (Ticker, Shares) VALUES (%s,%s)"
