@@ -135,8 +135,6 @@ for item in positions:
         record1 = (placeitem['openQuantity'], placeitem['totalCost'], placeitem['averageEntryPrice'], placeitem['currentPrice'], placeitem['currentMarketValue'], placeitem['openPnl'], plpercent, itempercent, bookcad, marketcad, placeitem['symbol'])
         mycursor.execute(sqlstuff, record1)
         db.commit()
-        
-
     if ismorethanone >= 2 and doubleadded == 'no' or doubleadded == 'yes':
         print ("doubled and nothing happends")
     else:     
@@ -164,14 +162,11 @@ import datetime
 activities = []
 today = date.today()
 today = today.strftime("%Y-%m-%d")
-
 for account in account_ids:
     print(account)
     activities = qtrade.get_account_activities(account, today, today) + activities
-
 mycursor.execute("select * from Operations")
 dbactivities = mycursor.fetchall()
-
 i=1
 for item in activities:
     opitem = 0
@@ -196,3 +191,73 @@ today = date.today()
 today = today.strftime("%Y-%m-%d")
 #------------------------------------------------------
 #--------Check Dividends and import them
+currentpositions = []
+sqlstuff = ("SELECT Ticker FROM Positions") #SELECT TO CHECK HOW MANY SECURITIES I HAVE 
+mycursor.execute(sqlstuff)
+currentpositions = mycursor.fetchall()
+for positionitem in currentpositions: #FOR TO SEARCH HOW MANY DIVIDENDS PER SHARE WITH THE N MARK
+    currentdiv = 0
+    sqloperations = ("SELECT TransactionID, Symbol, NetAmount FROM Operations "
+    "where Symbol = %s and InPositions = %s and ActivityType = %s")
+    Ticker = positionitem[0]
+    InDB = 'N'
+    Dividends = 'Dividends'
+    record1 = (Ticker, InDB, Dividends)
+    mycursor.execute(sqloperations, record1)
+    divlist = mycursor.fetchall()
+    #divlist
+    for divitem in divlist:
+        #print ("The stock symbol is", divitem[0], "and the total amount of money paid is", divitem[1])
+        sqlpositions = ("select Ticker, DividendIncome from Positions "
+        "where Ticker = %s") 
+        Ticker = divitem[1]
+        record1 = Ticker, 
+        mycursor.execute(sqlpositions, record1)
+        divposi = mycursor.fetchall()
+        divposi = divposi[0]
+        divposi = divposi[1]
+        print ("Total of dividends received by", divitem[1], "is", divposi, "and adding", divitem[2])
+        currentdiv = divposi + divitem[2]
+        sqlstuff = "UPDATE Positions SET DividendIncome = %s  WHERE Ticker = %s"
+        record1 = (currentdiv, divitem[1])
+        mycursor.execute(sqlstuff, record1)
+        db.commit()
+        print ("Transaction ID", divitem[0], "Ticker", divitem[1], "Amount", divitem[2], "has been marked as ADDED")
+        sqlstuff = "UPDATE Operations SET InPositions = %s  WHERE Symbol = %s"
+        inposition = 'Y'
+        record1 = (inposition, divitem[1])
+        mycursor.execute(sqlstuff, record1)
+        db.commit()
+
+        #print ("Total of", currentdiv)
+        
+
+
+
+
+
+        #need to get the current value
+        sqlstuff = ("SELECT Ticker FROM Positions") #SELECT TO CHECK HOW MANY SECURITIES I HAVE 
+        mycursor.execute(sqlstuff)
+        currentpositions = mycursor.fetchall()
+        for positionitem in currentpositions: #FOR TO SEARCH HOW MANY DIVIDENDS PER SHARE WITH THE N MARK
+
+
+
+        
+         
+
+    print("Total added", positionitem[0], "is", currentdiv)
+
+     
+        
+
+
+
+
+sqlstuff = ("SELECT * FROM Overall "
+         "WHERE Date = %s and BookValue >= %s")
+d2 = 0
+record1 = (d1, d2)
+mycursor.execute(sqlstuff, record1)
+dboverall = mycursor.fetchall()
