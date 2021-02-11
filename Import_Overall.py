@@ -33,7 +33,7 @@ for account in account_ids:
     positions = positions + temp 
 #----/Get info from Questrade
 
-#---------------------getday
+#---------------------getdaytoda
 today = date.today()
 d1 = today.strftime("%Y-%m-%d")
 #---------------------import sql
@@ -90,6 +90,7 @@ for item in positions:
     inthetable = 'no' #placeholder to see if a new stock has been added
     ismorethanone = 0
     doubleadded = 'no'
+    divcalc = 0
     for checkitem in positions: #Check if I have the same security in more than one account
         if item['symbol'] == checkitem['symbol']:
             ismorethanone = ismorethanone + 1
@@ -108,6 +109,7 @@ for item in positions:
         if test == test2:
             #print("Found")
             inthetable = 'yes'
+            divcalc = dbitem[9]
     if inthetable == 'no': #in case the stock is new!
         print("This stock", item['symbol'], "isn't on the table, we need to add")
         sqlstuff = "INSERT INTO Positions (Ticker, Shares) VALUES (%s,%s)"
@@ -127,7 +129,7 @@ for item in positions:
             bookcad = c.convert('USD', 'CAD', placeitem['totalCost'])
             marketcad = c.convert('USD', 'CAD', placeitem['currentMarketValue'])
         itempercent = marketcad * 100 /MarketValue
-        plpercent = (placeitem['openPnl'] * 100) / placeitem['totalCost']
+        plpercent = ((divcalc+placeitem['openPnl']) * 100) / placeitem['totalCost']
         print ("percentage is", itempercent)
         print ("prince in cad is", marketcad)
         print("UPDATED DOUBLES", placeitem['symbol'], placeitem['openQuantity'], placeitem['totalCost'])
@@ -145,7 +147,7 @@ for item in positions:
             bookcad = c.convert('USD', 'CAD', item['totalCost'])
             marketcad = c.convert('USD', 'CAD', item['currentMarketValue'])
         itempercent = marketcad * 100 /MarketValue
-        plpercent = (item['openPnl'] * 100) / item['totalCost']
+        plpercent = (divcalc+item['openPnl']) * 100) / item['totalCost']
         print ("percentage is", itempercent)
         print ("prince in cad is", marketcad)
         sqlstuff = "UPDATE Positions SET Shares = %s, CostBasis =%s, CostperShare =%s, CurrentPrice =%s, MarketValue =%s, PLMarket =%s, PLPercentage = %s, TotalPercentage = %s, BookCad = %s, MarketCad = %s  WHERE Ticker = %s"
