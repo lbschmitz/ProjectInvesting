@@ -147,7 +147,7 @@ for item in positions:
             bookcad = c.convert('USD', 'CAD', item['totalCost'])
             marketcad = c.convert('USD', 'CAD', item['currentMarketValue'])
         itempercent = marketcad * 100 /MarketValue
-        plpercent = (divcalc+item['openPnl']) * 100) / item['totalCost']
+        plpercent = ((divcalc+item['openPnl']) * 100) / item['totalCost']
         print ("percentage is", itempercent)
         print ("prince in cad is", marketcad)
         sqlstuff = "UPDATE Positions SET Shares = %s, CostBasis =%s, CostperShare =%s, CurrentPrice =%s, MarketValue =%s, PLMarket =%s, PLPercentage = %s, TotalPercentage = %s, BookCad = %s, MarketCad = %s  WHERE Ticker = %s"
