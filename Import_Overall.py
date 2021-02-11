@@ -153,9 +153,6 @@ for item in positions:
         mycursor.execute(sqlstuff, record1)
         db.commit()
         print("UPDATED SINGLES", item['symbol'], item['openQuantity'], item['totalCost'])
-        
-
-
 #UPDATING CURRENT POSITIONS TABLE -----------end
 #UPDATING OPERATIONS-----------------------------
 import datetime
@@ -228,36 +225,3 @@ for positionitem in currentpositions: #FOR TO SEARCH HOW MANY DIVIDENDS PER SHAR
         record1 = (inposition, divitem[1])
         mycursor.execute(sqlstuff, record1)
         db.commit()
-
-        #print ("Total of", currentdiv)
-        
-
-
-
-
-
-        #need to get the current value
-        sqlstuff = ("SELECT Ticker FROM Positions") #SELECT TO CHECK HOW MANY SECURITIES I HAVE 
-        mycursor.execute(sqlstuff)
-        currentpositions = mycursor.fetchall()
-        for positionitem in currentpositions: #FOR TO SEARCH HOW MANY DIVIDENDS PER SHARE WITH THE N MARK
-
-
-
-        
-         
-
-    print("Total added", positionitem[0], "is", currentdiv)
-
-     
-        
-
-
-
-
-sqlstuff = ("SELECT * FROM Overall "
-         "WHERE Date = %s and BookValue >= %s")
-d2 = 0
-record1 = (d1, d2)
-mycursor.execute(sqlstuff, record1)
-dboverall = mycursor.fetchall()
