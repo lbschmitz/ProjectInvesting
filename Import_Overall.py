@@ -74,9 +74,12 @@ if not dboverall:
     mycursor.execute(sqlstuff, record1)
     db.commit()
 else: 
-    print ("Daily Overall has been added already.")
+    print ("Daily Overall has been added already. so we updated!")
+    sqlstuff = "UPDATE Overall SET BookValue = %s, MarketValue = %s, MarketPL = %s, MarketPLPercent = %s  WHERE Date = %s"
+    record1 = (Bookvalue, MarketValue, PL, MarketPLPercent, d1)
+    mycursor.execute(sqlstuff, record1)
+    db.commit()
 #----/Check if record has been added
-
 
 #UPDATING CURRENT POSITIONS TABLE
 #----Search current positions table
@@ -157,6 +160,8 @@ for item in positions:
         db.commit()
         print("UPDATED SINGLES", item['symbol'], item['openQuantity'], item['totalCost'])
 #UPDATING CURRENT POSITIONS TABLE -----------end
+
+
 #UPDATING OPERATIONS-----------------------------
 import datetime
 activities = []
@@ -228,3 +233,5 @@ for positionitem in currentpositions: #FOR TO SEARCH HOW MANY DIVIDENDS PER SHAR
         record1 = (inposition, divitem[1])
         mycursor.execute(sqlstuff, record1)
         db.commit()
+#--------Check Dividends and import them end
+
