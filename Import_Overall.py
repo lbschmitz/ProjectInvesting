@@ -234,4 +234,34 @@ for positionitem in currentpositions: #FOR TO SEARCH HOW MANY DIVIDENDS PER SHAR
         mycursor.execute(sqlstuff, record1)
         db.commit()
 #--------Check Dividends and import them end
+#--------Snapshots!
+import datetime
+today = date.today()
+today = today.strftime("%Y-%m-%d")
+sqloperations = ("SELECT * from Positions")
+mycursor.execute(sqloperations)
+positions = mycursor.fetchall()
+for item in positions:
+    snaps = []
+    item[0]
+    item[14]
+    sqlstuff = ("SELECT id, Ticker FROM snapshots "
+        "WHERE Date = %s and Ticker = %s")
+    record1 = (today, item[0])
+    mycursor.execute(sqlstuff, record1)
+    snaps = mycursor.fetchall()
+    snaps
+    if not snaps:
+        print("I should insert")
+        sqlstuff = "INSERT INTO snapshots (Date,Ticker,Shares,CostBasis,CostperShare,CurrentPrice,MarketValue,PLMarket,DividendIncome,PLTotal,PLPercentage,TotalPercentage,BookCad,MarketCad,MarketDividends,DividendCad,PLCad) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        record1 = (today, item[0], item[3], item[4],item[5],item[6],item[7],item[8],item[9],item[10],item[11],item[12],item[13],item[14],item[15],item[16],item[17])
+        mycursor.execute(sqlstuff, record1)
+        db.commit()
+    else: 
+        print("I should update")
+        sqlstuff = "UPDATE snapshots SET Shares=%s,CostBasis=%s,CostperShare=%s,CurrentPrice=%s,MarketValue=%s,PLMarket=%s,DividendIncome=%s,PLTotal=%s,PLPercentage=%s,TotalPercentage=%s,BookCad=%s,MarketCad=%s,MarketDividends=%s,DividendCad=%s,PLCad=%s WHERE Date = %s and Ticker = %s"
+        record1 = (item[3], item[4],item[5],item[6],item[7],item[8],item[9],item[10],item[11],item[12],item[13],item[14],item[15],item[16],item[17], today, item[0])
+        mycursor.execute(sqlstuff, record1)
+        db.commit()
+        
 
