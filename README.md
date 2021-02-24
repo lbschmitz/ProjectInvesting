@@ -20,6 +20,5 @@ CRON Job running a python script to colect, parse and insert data into a MySQL d
 Using grafana to create a dashboard
 
 Things to be improved:
--Create horly update on Snapshots
 -Add "N" to dividend table
 -Improve Dividend Track per month
