@@ -110,7 +110,7 @@ for item in positions:
     for dbitem in dbpositions:
         test2 = dbitem[0]
         if test == test2:
-            print("Found")
+            #print("Found")
             inthetable = 'yes'
             dbitem[0]
             dbitem[9]
@@ -156,6 +156,9 @@ for item in positions:
             bookcad = c.convert('USD', 'CAD', item['totalCost'])
             marketcad = c.convert('USD', 'CAD', item['currentMarketValue'])
         itempercent = marketcad * 100 /MarketValue
+        if not divcalc:
+            print("If not divcalc")
+        else:
         plpercent = ((divcalc+item['openPnl']) * 100) / item['totalCost']
         print ("percentage is", itempercent)
         print ("prince in cad is", marketcad)
