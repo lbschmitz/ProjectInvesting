@@ -159,14 +159,14 @@ for item in positions:
         if not divcalc:
             print("If not divcalc")
         else:
-        plpercent = ((divcalc+item['openPnl']) * 100) / item['totalCost']
-        print ("percentage is", itempercent)
-        print ("prince in cad is", marketcad)
-        sqlstuff = "UPDATE Positions SET Shares = %s, CostBasis =%s, CostperShare =%s, CurrentPrice =%s, MarketValue =%s, PLMarket =%s, PLPercentage = %s, TotalPercentage = %s, BookCad = %s, MarketCad = %s  WHERE Ticker = %s"
-        record1 = (item['openQuantity'], item['totalCost'], item['averageEntryPrice'], item['currentPrice'], item['currentMarketValue'], item['openPnl'], plpercent, itempercent, bookcad, marketcad, item['symbol'])
-        mycursor.execute(sqlstuff, record1)
-        db.commit()
-        print("UPDATED SINGLES", item['symbol'], item['openQuantity'], item['totalCost'])
+            plpercent = ((divcalc+item['openPnl']) * 100) / item['totalCost']
+            print ("percentage is", itempercent)
+            print ("prince in cad is", marketcad)
+            sqlstuff = "UPDATE Positions SET Shares = %s, CostBasis =%s, CostperShare =%s, CurrentPrice =%s, MarketValue =%s, PLMarket =%s, PLPercentage = %s, TotalPercentage = %s, BookCad = %s, MarketCad = %s  WHERE Ticker = %s"
+            record1 = (item['openQuantity'], item['totalCost'], item['averageEntryPrice'], item['currentPrice'], item['currentMarketValue'], item['openPnl'], plpercent, itempercent, bookcad, marketcad, item['symbol'])
+            mycursor.execute(sqlstuff, record1)
+            db.commit()
+            print("UPDATED SINGLES", item['symbol'], item['openQuantity'], item['totalCost'])
 #UPDATING CURRENT POSITIONS TABLE -----------end
 
 
