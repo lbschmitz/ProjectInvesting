@@ -158,6 +158,7 @@ for item in positions:
         itempercent = marketcad * 100 /MarketValue
         if not divcalc:
             print("If not divcalc")
+            plpercent = ((item['openPnl']) * 100) / item['totalCost'] 
         else:
             plpercent = ((divcalc+item['openPnl']) * 100) / item['totalCost']
             print ("percentage is", itempercent)
