@@ -162,11 +162,11 @@ for item in positions:
             plpercent = ((divcalc+item['openPnl']) * 100) / item['totalCost']
             print ("percentage is", itempercent)
             print ("prince in cad is", marketcad)
-            sqlstuff = "UPDATE Positions SET Shares = %s, CostBasis =%s, CostperShare =%s, CurrentPrice =%s, MarketValue =%s, PLMarket =%s, PLPercentage = %s, TotalPercentage = %s, BookCad = %s, MarketCad = %s  WHERE Ticker = %s"
-            record1 = (item['openQuantity'], item['totalCost'], item['averageEntryPrice'], item['currentPrice'], item['currentMarketValue'], item['openPnl'], plpercent, itempercent, bookcad, marketcad, item['symbol'])
-            mycursor.execute(sqlstuff, record1)
-            db.commit()
-            print("UPDATED SINGLES", item['symbol'], item['openQuantity'], item['totalCost'])
+        sqlstuff = "UPDATE Positions SET Shares = %s, CostBasis =%s, CostperShare =%s, CurrentPrice =%s, MarketValue =%s, PLMarket =%s, PLPercentage = %s, TotalPercentage = %s, BookCad = %s, MarketCad = %s  WHERE Ticker = %s"
+        record1 = (item['openQuantity'], item['totalCost'], item['averageEntryPrice'], item['currentPrice'], item['currentMarketValue'], item['openPnl'], plpercent, itempercent, bookcad, marketcad, item['symbol'])
+        mycursor.execute(sqlstuff, record1)
+        db.commit()
+        print("UPDATED SINGLES", item['symbol'], item['openQuantity'], item['totalCost'])
 #UPDATING CURRENT POSITIONS TABLE -----------end
 
 
@@ -187,13 +187,14 @@ for item in activities:
     dateitem = item['tradeDate']
     dateitem = datetime.datetime.strptime(dateitem, "%Y-%m-%dT%H:%M:%S.%f-05:00")
     dateitem = datetime.datetime.date(dateitem)
+    addposi = 'N'
     for dbitem in dbactivities:
-        ne 
+        dbitem
     if opitem == 0:
         print ("\n The symbol is", item['symbol'], "and the total amount is", item['netAmount'],"the quantity is", item['quantity'], "and number #", i, "and the date is:", dateitem)
         print ("Add to the database")
-        sqlstuff = "INSERT INTO Operations (TransactionDate, Action, Symbol, Description, Quantity, Price, GrossAmount, Commission, NetAmount, Currency, ActivityType) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-        record1 = (item['tradeDate'], item['action'], item['symbol'],item['description'],item['quantity'],item['price'],item['grossAmount'],item['commission'],item['netAmount'],item['currency'],item['type'])
+        sqlstuff = "INSERT INTO Operations (TransactionDate, Action, Symbol, Description, Quantity, Price, GrossAmount, Commission, NetAmount, Currency, ActivityType,InPositions) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        record1 = (item['tradeDate'], item['action'], item['symbol'],item['description'],item['quantity'],item['price'],item['grossAmount'],item['commission'],item['netAmount'],item['currency'],item['type'],addposi)
         mycursor.execute(sqlstuff, record1)
         db.commit()
     i = i + 1
