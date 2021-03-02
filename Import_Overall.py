@@ -110,10 +110,15 @@ for item in positions:
     for dbitem in dbpositions:
         test2 = dbitem[0]
         if test == test2:
-            #print("Found")
+            print("Found")
             inthetable = 'yes'
+            dbitem[0]
+            dbitem[9]
             divcalc = dbitem[9]
-            divcalc = float(divcalc)
+            if not divcalc:
+                print("If not divcalc")
+            else:
+                divcalc = float(divcalc)
     if inthetable == 'no': #in case the stock is new!
         print("This stock", item['symbol'], "isn't on the table, we need to add")
         sqlstuff = "INSERT INTO Positions (Ticker, Shares) VALUES (%s,%s)"
@@ -180,10 +185,7 @@ for item in activities:
     dateitem = datetime.datetime.strptime(dateitem, "%Y-%m-%dT%H:%M:%S.%f-05:00")
     dateitem = datetime.datetime.date(dateitem)
     for dbitem in dbactivities:
-        netdbitem = dbitem[9]
-        netdbitem = float(netdbitem)
-        if item['netAmount'] == netdbitem and item['symbol'] == dbitem[3] and item['quantity'] == dbitem[5] and dateitem == dbitem[1]:
-            opitem = 1
+        ne 
     if opitem == 0:
         print ("\n The symbol is", item['symbol'], "and the total amount is", item['netAmount'],"the quantity is", item['quantity'], "and number #", i, "and the date is:", dateitem)
         print ("Add to the database")
