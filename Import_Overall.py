@@ -56,23 +56,11 @@ substring = '.TO'
 for item in positions:
     item
     if substring in item["symbol"]:
-        if not Bookvalue:
-            print("If not bookvalue")
-        else:
-            Bookvalue = Bookvalue + item["totalCost"]
-        if not MarketValue:
-            print("If not MarketValue")
-        else:
-            MarketValue = MarketValue + item["currentMarketValue"]  
+        Bookvalue = Bookvalue + item["totalCost"] 
+        MarketValue = MarketValue + item["currentMarketValue"]
     else:
-        if not Bookvalue:
-            print("If not bookvalue")
-        else:
-             Bookvalue = c.convert('USD', 'CAD', item['currentMarketValue']) + Bookvalue
-        if not MarketValue:
-            print("If not MarketValue")
-        else:
-            MarketValue = c.convert('USD', 'CAD', item['currentMarketValue']) + MarketValue       
+        Bookvalue = c.convert('USD', 'CAD', item['currentMarketValue']) + Bookvalue
+        MarketValue = c.convert('USD', 'CAD', item['currentMarketValue']) + MarketValue
 PL = MarketValue - Bookvalue
 MarketPLPercent = (PL * 100) / Bookvalue
 print ("Bookvalue", Bookvalue)
