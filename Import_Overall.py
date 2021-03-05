@@ -48,6 +48,17 @@ mycursor.execute(sqlstuff, record1)
 dboverall = mycursor.fetchall()
 #----------------------
 
+#fix open quantity
+q=0
+for item in positions:
+    q = q + 1
+    q
+    if item["openQuantity"] == 0:
+        print ("found")
+        q = q - 1
+        positions[q]
+        positions.pop(q)
+
 #----Get Overal info
 c = CurrencyRates()
 Bookvalue = 0
