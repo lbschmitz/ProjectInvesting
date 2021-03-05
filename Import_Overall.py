@@ -54,13 +54,25 @@ Bookvalue = 0
 MarketValue = 0
 substring = '.TO'
 for item in positions:
+    item
     if substring in item["symbol"]:
-        Bookvalue = Bookvalue + item["totalCost"] 
-        MarketValue = MarketValue + item["currentMarketValue"]
+        if not Bookvalue:
+            print("If not bookvalue")
+        else:
+            Bookvalue = Bookvalue + item["totalCost"]
+        if not MarketValue:
+            print("If not MarketValue")
+        else:
+            MarketValue = MarketValue + item["currentMarketValue"]  
     else:
-        Bookvalue = c.convert('USD', 'CAD', item['currentMarketValue']) + Bookvalue
-        MarketValue = c.convert('USD', 'CAD', item['currentMarketValue']) + MarketValue
-
+        if not Bookvalue:
+            print("If not bookvalue")
+        else:
+             Bookvalue = c.convert('USD', 'CAD', item['currentMarketValue']) + Bookvalue
+        if not MarketValue:
+            print("If not MarketValue")
+        else:
+            MarketValue = c.convert('USD', 'CAD', item['currentMarketValue']) + MarketValue       
 PL = MarketValue - Bookvalue
 MarketPLPercent = (PL * 100) / Bookvalue
 print ("Bookvalue", Bookvalue)
@@ -138,14 +150,18 @@ for item in positions:
             bookcad = c.convert('USD', 'CAD', placeitem['totalCost'])
             marketcad = c.convert('USD', 'CAD', placeitem['currentMarketValue'])
         itempercent = marketcad * 100 /MarketValue
-        plpercent = ((divcalc+placeitem['openPnl']) * 100) / placeitem['totalCost']
-        print ("percentage is", itempercent)
-        print ("prince in cad is", marketcad)
-        print("UPDATED DOUBLES", placeitem['symbol'], placeitem['openQuantity'], placeitem['totalCost'])
-        sqlstuff = "UPDATE Positions SET Shares = %s, CostBasis =%s, CostperShare =%s, CurrentPrice =%s, MarketValue =%s, PLMarket =%s, PLPercentage = %s, TotalPercentage = %s, BookCad = %s, MarketCad = %s WHERE Ticker = %s"
-        record1 = (placeitem['openQuantity'], placeitem['totalCost'], placeitem['averageEntryPrice'], placeitem['currentPrice'], placeitem['currentMarketValue'], placeitem['openPnl'], plpercent, itempercent, bookcad, marketcad, placeitem['symbol'])
-        mycursor.execute(sqlstuff, record1)
-        db.commit()
+        if not divcalc:
+            print("If not divcalc")
+            plpercent = ((placeitem['openPnl']) * 100) / placeitem['totalCost']
+        else:
+            plpercent = ((divcalc+placeitem['openPnl']) * 100) / placeitem['totalCost']
+            print ("percentage is", itempercent)
+            print ("prince in cad is", marketcad)
+            print("UPDATED DOUBLES", placeitem['symbol'], placeitem['openQuantity'], placeitem['totalCost'])
+            sqlstuff = "UPDATE Positions SET Shares = %s, CostBasis =%s, CostperShare =%s, CurrentPrice =%s, MarketValue =%s, PLMarket =%s, PLPercentage = %s, TotalPercentage = %s, BookCad = %s, MarketCad = %s WHERE Ticker = %s"
+            record1 = (placeitem['openQuantity'], placeitem['totalCost'], placeitem['averageEntryPrice'], placeitem['currentPrice'], placeitem['currentMarketValue'], placeitem['openPnl'], plpercent, itempercent, bookcad, marketcad, placeitem['symbol'])
+            mycursor.execute(sqlstuff, record1)
+            db.commit()
     if ismorethanone >= 2 and doubleadded == 'no' or doubleadded == 'yes':
         print ("doubled and nothing happends")
     else:     
